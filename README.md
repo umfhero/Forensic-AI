@@ -20,6 +20,50 @@ forensic-ai extends [Protocol SIFT](https://www.sans.org/tools/sift-workstation)
 
 Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Institute, Apr–Jun 2026).
 
+
+## Contributors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/umfhero">
+        <img src="https://github.com/umfhero.png" width="100px;" alt="Majid"/>
+        <br/>
+        <sub><b>Majid</b></sub>
+      </a>
+      <br/>
+      <sub>Lead Dev · MCP + Reasoning Framework</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Disc0nnect3d17">
+        <img src="https://github.com/Disc0nnect3d17.png" width="100px;" alt="Mauro"/>
+        <br/>
+        <sub><b>Mauro</b></sub>
+      </a>
+      <br/>
+      <sub>Lead Dev · Agent + Self-Correction</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Yaso-cyber">
+        <img src="https://github.com/Yaso-cyber.png" width="100px;" alt="Yasmine"/>
+        <br/>
+        <sub><b>Yasmine</b></sub>
+      </a>
+      <br/>
+      <sub>Documentation · QA · Accuracy Report</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/kali-fz">
+        <img src="https://github.com/kali-fz.png" width="100px;" alt="Kali"/>
+        <br/>
+        <sub><b>Kali</b></sub>
+      </a>
+      <br/>
+      <sub>Demo · DevOps · Try-It-Out</sub>
+    </td>
+  </tr>
+</table>
+
 ## Architecture
 
 ```
@@ -95,48 +139,7 @@ See [overview.md](overview.md) for the full project plan, progress tracker, subm
 | Demo, polish, submit | Weeks 7–8 | 🔲 Not started |
 | **Submission deadline** | **15 Jun 2026** | ⏳ |
 
-## Contributors
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/umfhero">
-        <img src="https://github.com/umfhero.png" width="100px;" alt="Majid"/>
-        <br/>
-        <sub><b>Majid</b></sub>
-      </a>
-      <br/>
-      <sub>Lead Dev · MCP + Reasoning Framework</sub>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Disc0nnect3d17">
-        <img src="https://github.com/Disc0nnect3d17.png" width="100px;" alt="Mauro"/>
-        <br/>
-        <sub><b>Mauro</b></sub>
-      </a>
-      <br/>
-      <sub>Lead Dev · Agent + Self-Correction</sub>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Yaso-cyber">
-        <img src="https://github.com/Yaso-cyber.png" width="100px;" alt="Yasmine"/>
-        <br/>
-        <sub><b>Yasmine</b></sub>
-      </a>
-      <br/>
-      <sub>Documentation · QA · Accuracy Report</sub>
-    </td>
-    <td align="center">
-      <a href="https://github.com/kali-fz">
-        <img src="https://github.com/kali-fz.png" width="100px;" alt="Kali"/>
-        <br/>
-        <sub><b>Kali</b></sub>
-      </a>
-      <br/>
-      <sub>Demo · DevOps · Try-It-Out</sub>
-    </td>
-  </tr>
-</table>
 
 ## Hackathon
 
