@@ -22,75 +22,47 @@ Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Instit
 
 ## Contributors
 
-<style>
-.contributor-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-.contributor-card { padding: 20px; text-align: center; }
-.contributor-img { 
-  width: 100px; 
-  height: 100px; 
-  border-radius: 50%; 
-  object-fit: cover;
-  border: 3px solid #0969da;
-  margin: 12px auto;
-  display: block;
-}
-.contributor-name { font-weight: 700; font-size: 16px; margin: 0 0 12px 0; }
-.contributor-role { 
-  display: inline-block;
-  background: #0969da;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 8px;
-}
-.contributor-role.management { background: #6e40aa; }
-.contributor-role.forensics { background: #bc3723; }
-.contributor-role.engineer { background: #1f6feb; }
-</style>
-
-<table class="contributor-table">
+<table>
   <tr>
-    <td class="contributor-card">
-      <div class="contributor-name">Majid</div>
+    <td align="center">
+      <div><b>Majid</b></div>
       <a href="https://github.com/umfhero">
-        <img class="contributor-img" src="https://github.com/umfhero.png" alt="Majid"/>
+        <img src="https://github.com/umfhero.png" width="100px" alt="Majid" style="border-radius: 50%;"/>
       </a>
-      <div class="contributor-role management">Project Lead & Architecture</div>
-      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
+      <div><b>Project Lead & Architecture</b></div>
+      <div>Programmer · Digital Forensics</div>
     </td>
-    <td class="contributor-card">
-      <div class="contributor-name">Mauro</div>
+    <td align="center">
+      <div><b>Mauro</b></div>
       <a href="https://github.com/Disc0nnect3d17">
-        <img class="contributor-img" src="https://github.com/Disc0nnect3d17.png" alt="Mauro"/>
+        <img src="https://github.com/Disc0nnect3d17.png" width="100px" alt="Mauro" style="border-radius: 50%;"/>
       </a>
-      <div class="contributor-role forensics">Memory Forensics Engineer</div>
-      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
+      <div><b>Memory Forensics Engineer</b></div>
+      <div>Programmer · Digital Forensics</div>
     </td>
-    <td class="contributor-card">
-      <div class="contributor-name">Yasmine</div>
+    <td align="center">
+      <div><b>Yasmine</b></div>
       <a href="https://github.com/Yaso-cyber">
-        <img class="contributor-img" src="https://github.com/Yaso-cyber.png" alt="Yasmine"/>
+        <img src="https://github.com/Yaso-cyber.png" width="100px" alt="Yasmine" style="border-radius: 50%;"/>
       </a>
-      <div class="contributor-role engineer">System Engineer</div>
-      <div style="font-size: 12px; color: #666; margin-top: 6px;">QA · Documentation</div>
+      <div><b>System Engineer</b></div>
+      <div>QA · Documentation</div>
     </td>
-    <td class="contributor-card">
-      <div class="contributor-name">Khalid</div>
+    <td align="center">
+      <div><b>Khalid</b></div>
       <a href="https://github.com/kali-fz">
-        <img class="contributor-img" src="https://github.com/kali-fz.png" alt="Khalid"/>
+        <img src="https://github.com/kali-fz.png" width="100px" alt="Khalid" style="border-radius: 50%;"/>
       </a>
-      <div class="contributor-role engineer">System Engineer</div>
-      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Infrastructure</div>
+      <div><b>System Engineer</b></div>
+      <div>Programmer · Infrastructure</div>
     </td>
-    <td class="contributor-card">
-      <div class="contributor-name">Jurgen</div>
+    <td align="center">
+      <div><b>Jurgen</b></div>
       <a href="https://github.com/bunit402">
-        <img class="contributor-img" src="https://github.com/bunit402.png" alt="Jurgen"/>
+        <img src="https://github.com/bunit402.png" width="100px" alt="Jurgen" style="border-radius: 50%;"/>
       </a>
-      <div class="contributor-role forensics">Disk Forensics Engineer</div>
-      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
+      <div><b>Disk Forensics Engineer</b></div>
+      <div>Programmer · Digital Forensics</div>
     </td>
   </tr>
 </table>
