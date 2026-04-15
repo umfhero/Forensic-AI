@@ -31,9 +31,10 @@ Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Instit
   border-radius: 50%; 
   object-fit: cover;
   border: 3px solid #0969da;
-  margin-bottom: 12px;
+  margin: 12px auto;
+  display: block;
 }
-.contributor-name { font-weight: 700; font-size: 16px; margin: 8px 0; }
+.contributor-name { font-weight: 700; font-size: 16px; margin: 0 0 12px 0; }
 .contributor-role { 
   display: inline-block;
   background: #0969da;
@@ -52,42 +53,42 @@ Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Instit
 <table class="contributor-table">
   <tr>
     <td class="contributor-card">
+      <div class="contributor-name">Majid</div>
       <a href="https://github.com/umfhero">
         <img class="contributor-img" src="https://github.com/umfhero.png" alt="Majid"/>
       </a>
-      <div class="contributor-name">Majid</div>
       <div class="contributor-role management">Project Lead & Architecture</div>
       <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
     </td>
     <td class="contributor-card">
+      <div class="contributor-name">Mauro</div>
       <a href="https://github.com/Disc0nnect3d17">
         <img class="contributor-img" src="https://github.com/Disc0nnect3d17.png" alt="Mauro"/>
       </a>
-      <div class="contributor-name">Mauro</div>
       <div class="contributor-role forensics">Memory Forensics Engineer</div>
       <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
     </td>
     <td class="contributor-card">
+      <div class="contributor-name">Yasmine</div>
       <a href="https://github.com/Yaso-cyber">
         <img class="contributor-img" src="https://github.com/Yaso-cyber.png" alt="Yasmine"/>
       </a>
-      <div class="contributor-name">Yasmine</div>
-      <div class="contributor-role engineer">Software Engineer</div>
+      <div class="contributor-role engineer">System Engineer</div>
       <div style="font-size: 12px; color: #666; margin-top: 6px;">QA · Documentation</div>
     </td>
     <td class="contributor-card">
+      <div class="contributor-name">Khalid</div>
       <a href="https://github.com/kali-fz">
         <img class="contributor-img" src="https://github.com/kali-fz.png" alt="Khalid"/>
       </a>
-      <div class="contributor-name">Khalid</div>
-      <div class="contributor-role engineer">Senior DevOps Engineer</div>
+      <div class="contributor-role engineer">System Engineer</div>
       <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Infrastructure</div>
     </td>
     <td class="contributor-card">
+      <div class="contributor-name">Jurgen</div>
       <a href="https://github.com/bunit402">
         <img class="contributor-img" src="https://github.com/bunit402.png" alt="Jurgen"/>
       </a>
-      <div class="contributor-name">Jurgen</div>
       <div class="contributor-role forensics">Disk Forensics Engineer</div>
       <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
     </td>
