@@ -4,7 +4,7 @@ A hybrid extension of Protocol SIFT that teaches the agent how a senior incident
 
 Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Institute, Apr–Jun 2026).
 
-**Team:** Majid, Yasmine, Kalid, Mauro
+**Team:** Majid, Yasmine, Kalid, Mauro, Jurgen
 
 ---
 

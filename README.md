@@ -20,46 +20,76 @@ forensic-ai extends [Protocol SIFT](https://www.sans.org/tools/sift-workstation)
 
 Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Institute, Apr–Jun 2026).
 
-
 ## Contributors
 
-<table>
+<style>
+.contributor-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+.contributor-card { padding: 20px; text-align: center; }
+.contributor-img { 
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  object-fit: cover;
+  border: 3px solid #0969da;
+  margin-bottom: 12px;
+}
+.contributor-name { font-weight: 700; font-size: 16px; margin: 8px 0; }
+.contributor-role { 
+  display: inline-block;
+  background: #0969da;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.contributor-role.management { background: #6e40aa; }
+.contributor-role.forensics { background: #bc3723; }
+.contributor-role.engineer { background: #1f6feb; }
+</style>
+
+<table class="contributor-table">
   <tr>
-    <td align="center">
+    <td class="contributor-card">
       <a href="https://github.com/umfhero">
-        <img src="https://github.com/umfhero.png" width="100px;" alt="Majid"/>
-        <br/>
-        <sub><b>Majid</b></sub>
+        <img class="contributor-img" src="https://github.com/umfhero.png" alt="Majid"/>
       </a>
-      <br/>
-      <sub>Lead Dev · MCP + Reasoning Framework</sub>
+      <div class="contributor-name">Majid</div>
+      <div class="contributor-role management">Project Lead & Architecture</div>
+      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
     </td>
-    <td align="center">
+    <td class="contributor-card">
       <a href="https://github.com/Disc0nnect3d17">
-        <img src="https://github.com/Disc0nnect3d17.png" width="100px;" alt="Mauro"/>
-        <br/>
-        <sub><b>Mauro</b></sub>
+        <img class="contributor-img" src="https://github.com/Disc0nnect3d17.png" alt="Mauro"/>
       </a>
-      <br/>
-      <sub>Lead Dev · Agent + Self-Correction</sub>
+      <div class="contributor-name">Mauro</div>
+      <div class="contributor-role forensics">Memory Forensics Engineer</div>
+      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
     </td>
-    <td align="center">
+    <td class="contributor-card">
       <a href="https://github.com/Yaso-cyber">
-        <img src="https://github.com/Yaso-cyber.png" width="100px;" alt="Yasmine"/>
-        <br/>
-        <sub><b>Yasmine</b></sub>
+        <img class="contributor-img" src="https://github.com/Yaso-cyber.png" alt="Yasmine"/>
       </a>
-      <br/>
-      <sub>Documentation · QA · Accuracy Report</sub>
+      <div class="contributor-name">Yasmine</div>
+      <div class="contributor-role engineer">Software Engineer</div>
+      <div style="font-size: 12px; color: #666; margin-top: 6px;">QA · Documentation</div>
     </td>
-    <td align="center">
+    <td class="contributor-card">
       <a href="https://github.com/kali-fz">
-        <img src="https://github.com/kali-fz.png" width="100px;" alt="Kali"/>
-        <br/>
-        <sub><b>Kali</b></sub>
+        <img class="contributor-img" src="https://github.com/kali-fz.png" alt="Khalid"/>
       </a>
-      <br/>
-      <sub>Demo · DevOps · Try-It-Out</sub>
+      <div class="contributor-name">Khalid</div>
+      <div class="contributor-role engineer">Senior DevOps Engineer</div>
+      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Infrastructure</div>
+    </td>
+    <td class="contributor-card">
+      <a href="https://github.com/bunit402">
+        <img class="contributor-img" src="https://github.com/bunit402.png" alt="Jurgen"/>
+      </a>
+      <div class="contributor-name">Jurgen</div>
+      <div class="contributor-role forensics">Disk Forensics Engineer</div>
+      <div style="font-size: 12px; color: #666; margin-top: 6px;">Programmer · Digital Forensics</div>
     </td>
   </tr>
 </table>
@@ -115,13 +145,13 @@ cd forensic-ai
 
 The agent follows a structured five-phase triage sequence:
 
-| Phase | What Happens |
-|---|---|
-| **1. Initial Survey** | Broad-scope analysis (process listing, supertimeline, event logs) to establish a baseline and identify time windows of interest. |
-| **2. Targeted Deep-Dive** | Focused analysis on suspicious findings from Phase 1, using the appropriate tools for the specific artefact type. |
-| **3. Cross-Validation** | Compares findings across disk and memory sources, flags discrepancies, and assesses what they mean. |
-| **4. Self-Correction** | Evaluates its own analysis for gaps, unsupported assumptions, and contradictions. Re-runs targeted functions and documents what changed. |
-| **5. Synthesis** | Produces a structured investigative narrative with confirmed findings separated from inferences and every claim traced to a specific tool execution. |
+| Phase                     | What Happens                                                                                                                                         |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Initial Survey**     | Broad-scope analysis (process listing, supertimeline, event logs) to establish a baseline and identify time windows of interest.                     |
+| **2. Targeted Deep-Dive** | Focused analysis on suspicious findings from Phase 1, using the appropriate tools for the specific artefact type.                                    |
+| **3. Cross-Validation**   | Compares findings across disk and memory sources, flags discrepancies, and assesses what they mean.                                                  |
+| **4. Self-Correction**    | Evaluates its own analysis for gaps, unsupported assumptions, and contradictions. Re-runs targeted functions and documents what changed.             |
+| **5. Synthesis**          | Produces a structured investigative narrative with confirmed findings separated from inferences and every claim traced to a specific tool execution. |
 
 Every finding is classified as **CONFIRMED** (traced to specific artefact), **INFERRED** (logical deduction, explicitly stated), or **UNCERTAIN** (flagged for human review).
 
@@ -129,25 +159,23 @@ Every finding is classified as **CONFIRMED** (traced to specific artefact), **IN
 
 See [overview.md](overview.md) for the full project plan, progress tracker, submission checklist, and open questions.
 
-| Milestone | Target | Status |
-|---|---|---|
-| SIFT Workstation + Protocol SIFT setup | Before 15 Apr | 🔲 Not started |
-| Custom MCP function scaffold | Weeks 1–2 | 🔲 Not started |
-| Reasoning framework (CLAUDE.md skill files) | Weeks 3–4 | 🔲 Not started |
-| Self-correction loop | Weeks 3–4 | 🔲 Not started |
-| Cross-validation + refinement | Weeks 5–6 | 🔲 Not started |
-| Demo, polish, submit | Weeks 7–8 | 🔲 Not started |
-| **Submission deadline** | **15 Jun 2026** | ⏳ |
-
-
+| Milestone                                   | Target          | Status         |
+| ------------------------------------------- | --------------- | -------------- |
+| SIFT Workstation + Protocol SIFT setup      | Before 15 Apr   | 🔲 Not started |
+| Custom MCP function scaffold                | Weeks 1–2       | 🔲 Not started |
+| Reasoning framework (CLAUDE.md skill files) | Weeks 3–4       | 🔲 Not started |
+| Self-correction loop                        | Weeks 3–4       | 🔲 Not started |
+| Cross-validation + refinement               | Weeks 5–6       | 🔲 Not started |
+| Demo, polish, submit                        | Weeks 7–8       | 🔲 Not started |
+| **Submission deadline**                     | **15 Jun 2026** | ⏳             |
 
 ## Hackathon
 
-| | |
-|---|---|
-| **Event** | [FIND EVIL!](https://findevil.devpost.com/) — AI threats strike in minutes. Build the defender that responds in seconds. |
-| **Sponsor** | [SANS Institute](https://sans.org) |
-| **Period** | 15 April – 15 June 2026 |
+|              |                                                                                                                                                             |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Event**    | [FIND EVIL!](https://findevil.devpost.com/) — AI threats strike in minutes. Build the defender that responds in seconds.                                    |
+| **Sponsor**  | [SANS Institute](https://sans.org)                                                                                                                          |
+| **Period**   | 15 April – 15 June 2026                                                                                                                                     |
 | **Platform** | [SIFT Workstation](https://www.sans.org/tools/sift-workstation) + [Protocol SIFT](https://raw.githubusercontent.com/teamdfir/protocol-sift/main/install.sh) |
 
 ## Licence
