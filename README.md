@@ -111,7 +111,17 @@ Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Instit
 ```bash
 git clone https://github.com/umfhero/forensic-ai.git
 cd forensic-ai
-# Further setup steps TBD
+
+# Install and start the custom MCP server
+cd mcp-server
+npm install
+MOCK_MODE=1 npm start   # Use mock data for development without SIFT
+
+# Deploy skill files to Claude Code
+mkdir -p ~/.claude/skills/forensic-ai
+cp skills/*.md ~/.claude/skills/forensic-ai/
+
+# Add MCP server to Claude Code settings — see config/settings.json.example
 ```
 
 ## How It Works
@@ -135,8 +145,9 @@ See [overview.md](overview.md) for the full project plan, progress tracker, subm
 | Milestone                                   | Target          | Status         |
 | ------------------------------------------- | --------------- | -------------- |
 | SIFT Workstation + Protocol SIFT setup      | Before 15 Apr   | 🔲 Not started |
-| Custom MCP function scaffold                | Weeks 1–2       | 🔲 Not started |
-| Reasoning framework (CLAUDE.md skill files) | Weeks 3–4       | 🔲 Not started |
+| Custom MCP function scaffold                | Weeks 1–2       | ✅ Complete    |
+| Electron desktop app scaffold               | Weeks 1–2       | ✅ Complete    |
+| Reasoning framework (CLAUDE.md skill files) | Weeks 3–4       | 🟡 In progress |
 | Self-correction loop                        | Weeks 3–4       | 🔲 Not started |
 | Cross-validation + refinement               | Weeks 5–6       | 🔲 Not started |
 | Demo, polish, submit                        | Weeks 7–8       | 🔲 Not started |

@@ -1,5 +1,68 @@
 # Jurgen's Tasks — forensic-AI
 
+**Role:** Testing & Accuracy Validation — runs the agent against evidence, feeds accuracy data to Yasmine, verifies every finding traces back to a tool execution.
+
+---
+
+## Now — In Flight
+
+- [ ] Install SIFT Workstation + Protocol SIFT locally
+- [ ] Clone the repo and run the desktop app in mock mode (`cd desktop && npm run dev`) to get familiar with the UI
+- [ ] Read `overview.md` so the three-layer architecture and five-phase triage loop are clear before testing
+
+## Baseline Testing
+
+- [ ] Run Protocol SIFT against the starter case data (https://sansorg.egnyte.com/fl/HhH7crTYT4JK)
+- [ ] Record baseline results in Yasmine's accuracy tracker: what was found, missed, hallucinated, presented as confirmed when actually uncertain
+- [ ] Note the SIFT tools Protocol SIFT calls and their versions (feeds Yasmine's tool inventory)
+- [ ] Document starter evidence sets — artefact types, time periods, apparent ground truth
+
+## Desktop App + Agent Testing
+
+- [ ] Run the desktop app against the same evidence and record outputs in the same accuracy tracker format
+- [ ] For each finding in the Findings panel, verify:
+  - Confidence tag is correct (CONFIRMED / INFERRED / UNCERTAIN)
+  - `function_call_id` in the Diagnostics log matches a real tool execution
+  - Source artefact path points to an actual file
+- [ ] Flag any finding that cannot be traced back to a specific tool call — these are the failures criterion #5 checks for
+
+## Regression Testing Across Phases
+
+- [ ] As Majid and Mauro ship new skill files, re-run the same evidence set and check:
+  - Did confidence classification improve?
+  - Did self-correction actually trigger?
+  - Did the second pass improve the output?
+- [ ] Feed observations back to Majid quickly — the skill files are still being written
+
+## Audit Trail Verification
+
+- [ ] For each demo-quality finding, trace: UI → `function_call_id` → execution log → tool call → source artefact
+- [ ] Any break in that chain is a blocker; report to Mauro
+
+## Bypass Testing Support
+
+- [ ] Assist Yasmine: run prompts that push the agent toward destructive actions or try to get it to present uncertain findings as confirmed
+- [ ] Record whether architectural guardrails hold vs prompt-based ones
+
+## Submit
+
+- [ ] Final pass on accuracy report numbers (FP rate, FN rate, hallucination rate)
+- [ ] Run Khalid's setup instructions as a fresh user, flag every gap
+- [ ] Support the final submission checklist review
+
+## Submission Components Owned
+
+| # | Deliverable | Role |
+|---|---|---|
+| 6 | Accuracy Report | Contributor (data collection + validation) |
+| 7 | Try-It-Out Instructions | Reviewer (fresh-user testing) |
+| 8 | Agent Execution Logs | Verifier (audit trail tracing) |
+
+## If Stuck
+
+If the agent does something unexpected and it's unclear whether it's a bug or expected behaviour, bring it to Majid with a specific log excerpt — faster than diagnosing alone.
+# Jurgen's Tasks — forensic-AI
+
 **Role: Testing & Accuracy Validation**
 
 This role sits in the QA and testing track alongside Yasmine, with specific ownership of running the agent against evidence and contributing to the accuracy report. The work done in phases 2 and 3 directly feeds judging criteria #2 (IR Accuracy) and #5 (Audit Trail Quality), and having dedicated testing coverage alongside Yasmine means those criteria are consistently tracked rather than being squeezed in at the end.

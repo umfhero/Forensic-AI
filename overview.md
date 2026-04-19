@@ -4,7 +4,7 @@ A hybrid extension of Protocol SIFT that teaches the agent how a senior incident
 
 Built for the [FIND EVIL! Hackathon](https://findevil.devpost.com/) (SANS Institute, Apr–Jun 2026).
 
-**Team:** Majid, Yasmine, Kalid, Mauro, Jurgen
+**Team:** Majid, Yasmine, Khalid, Mauro, Jurgen
 
 ---
 
@@ -37,10 +37,17 @@ The emphasis is on reasoning quality and self-correction rather than infrastruct
 
 ## Architecture
 
-**Approach: Hybrid (Direct Agent Extension + Focused Custom MCP Server)**
+**Approach: Hybrid (Direct Agent Extension + Focused Custom MCP Server + Electron Desktop App)**
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
+│          Forensic-AI Desktop App (Electron, cross-platform)    │
+│  - Three-pane investigation dashboard (Designrules.md)         │
+│  - Embedded AI terminal (xterm.js) driving the agent           │
+│  - Live findings panel with CONFIRMED / INFERRED / UNCERTAIN   │
+│  - Structured report view + diagnostics log                    │
+│  - Ships as AppImage (SIFT VM), DMG (macOS), exe (Windows)     │
+├───────────────────────────────────────────────────────────────┤
 │                   Self-Correcting Triage Loop                  │
 │  5-phase investigative sequence with max-iteration cap         │
 │  Draws from team's dissertation work on anti-hallucination     │
@@ -53,7 +60,7 @@ The emphasis is on reasoning quality and self-correction rather than infrastruct
 │  - Confidence classification (confirmed / inferred / uncertain)│
 │  - Structured report templates                                 │
 ├───────────────────────────────────────────────────────────────┤
-│            Focused Custom MCP Functions (5–8)                  │
+│            Focused Custom MCP Functions (3–5)                  │
 │  Typed functions ONLY for tools where raw output is too        │
 │  large for context window (Volatility, supertimelines, etc.)   │
 │  Structured JSON output with pagination                        │
@@ -71,6 +78,12 @@ The emphasis is on reasoning quality and self-correction rather than infrastruct
 │  Disk images, memory captures, log files, network captures     │
 └───────────────────────────────────────────────────────────────┘
 ```
+
+**Why an Electron desktop app on top of the hybrid stack:**
+
+The hackathon rewards autonomous execution quality and reasoning transparency. A desktop app makes both *visible*. Mauro's dissertation is an AI-assisted terminal; Majid's is an anti-hallucination framework — both are native to this UX. Wrapping them in one cross-platform Electron app (runs in the SIFT VM, also on macOS/Windows dev machines) turns the submission from "agent in a terminal" into an examiner-grade portal, which is the quality bar Valhuntir set.
+
+The desktop app is *thin*: a renderer that visualises the MCP server's structured output, an embedded xterm terminal that routes commands through the agent, and an IPC bridge that spawns the MCP server as a child process. All forensic logic stays in the MCP server and the CLAUDE.md skill files — the UI just makes it inspectable.
 
 **Why hybrid instead of pure Custom MCP Server:**
 
@@ -127,7 +140,7 @@ We still get architectural guardrails to point to for criterion #4: the custom M
 | #3 Breadth/Depth                     | Focus on disk images + memory captures (our strongest forensic domains) rather than trying to cover everything. Depth beats breadth per the criteria.                                                                          |
 | #4 Constraint Implementation         | Hybrid guardrails: architectural (custom MCP functions, read-only evidence, structured output parsing) + prompt-based (CLAUDE.md reasoning framework). Bypass testing documented honestly.                                     |
 | #5 Audit Trail                       | Every finding traced to specific tool execution via the custom MCP function's structured output (function_call_id, timestamp, source artefact). For Protocol SIFT's shell commands: we capture execution logs with timestamps. |
-| #6 Usability/Documentation           | Yasmine and Kali own this from week 1, including try-it-out instructions, architecture diagram, and accuracy report.                                                                                                           |
+| #6 Usability/Documentation           | Yasmine and Khalid own this from week 1, including try-it-out instructions, architecture diagram, and accuracy report. Khalid also owns the demo video and deployment on SIFT.                                                 |
 
 ---
 
@@ -153,21 +166,27 @@ We still get architectural guardrails to point to for criterion #4: the custom M
 
 **Owner: Majid + Mauro**
 
+- [x] Scaffold the TypeScript MCP server (`mcp-server/`) with stdio transport, shared Zod schemas, and 3 initial tools: `vol_pslist`, `vol_netscan`, `build_supertimeline`
+- [x] Define the consistent JSON output schema (status, data, metadata with source artefact path and tool version and function_call_id, timestamp, pagination)
+- [x] Draft first skill files in `skills/`: `INVESTIGATION_SEQUENCING.md`, `CONFIDENCE_CLASSIFICATION.md`
+- [x] Scaffold the Electron desktop app (`desktop/`) with three-pane dashboard, embedded xterm terminal, MCP bridge (stdio), and design system from `Designrules.md`
 - [ ] Deep dive into Protocol SIFT's codebase: understand the existing CLAUDE.md files, MCP tool setup, how it invokes SIFT tools, how it handles errors, what its existing self-correction looks like
-- [ ] Identify the specific tools where raw output overflows the context window — these are the candidates for custom MCP functions (likely: Volatility pslist/netscan on large memory images, log2timeline supertimelines, large EVTX log sets)
-- [ ] Scaffold the custom MCP server for those focused functions
-- [ ] Define the consistent JSON output schema (status, data, metadata with source artefact path and tool version and function_call_id, timestamp, pagination)
-- [ ] Implement first 2–3 custom MCP functions for the highest-priority tools
-- [ ] Begin drafting the CLAUDE.md reasoning framework: investigation sequencing logic, confidence classification system
-- [ ] Get the agent calling custom MCP functions alongside Protocol SIFT's existing tools
+- [ ] Install SIFT + Protocol SIFT and verify the MCP server runs real Volatility instead of mocks
+- [ ] Wire the xterm terminal in the desktop app to a real agent session (Claude Code subprocess or Anthropic API direct)
 
-**Owner: Yasmine + Kali**
+**Owner: Yasmine + Khalid**
 
 - [ ] Set up SIFT Workstation and run through the existing Protocol SIFT against sample evidence
-- [ ] Document Protocol SIFT baseline in detail: what it gets right, where it hallucinates, what it misses, how its existing self-correction works (or fails)
-- [ ] Begin architecture diagram draft
-- [ ] Explore the starter case data — document what's in each evidence set and what "ground truth" looks like
+- [ ] Document Protocol SIFT baseline: what it gets right, where it hallucinates, what it misses, how its existing self-correction works (or fails)
+- [ ] Audit the desktop app UI against `Designrules.md` and flag any drift
+- [ ] Begin architecture diagram draft (include the new desktop-app layer)
+- [ ] Explore the starter case data — document evidence sets and apparent ground truth
 - [ ] Track all resources and announcements posted to the Slack
+
+**Owner: Jurgen**
+
+- [ ] Run Protocol SIFT against the starter case data and record baseline findings in Yasmine's accuracy tracker
+- [ ] Get familiar with the desktop app in mock mode so testing can start as soon as real tools are wired in
 
 ### Phase 2: Reasoning Framework + Self-Correction — Weeks 3–4 (30 Apr – 13 May)
 
@@ -185,13 +204,16 @@ We still get architectural guardrails to point to for criterion #4: the custom M
   - [ ] Re-run logic: how the agent adjusts parameters and re-invokes tools
   - [ ] Max-iteration cap (3–5 cycles) with graceful degradation
 - [ ] Implement remaining custom MCP functions as needed (only for tools where structured output genuinely helps)
+- [ ] Stream triage-loop phase changes and self-correction iterations into the desktop app's phase indicator
+- [ ] Render findings (with confidence tags) and execution-log entries live in the desktop app
 
-**Owner: Yasmine + Kali**
+**Owner: Yasmine + Khalid**
 
 - [ ] Run the agent against sample evidence as the reasoning framework develops
 - [ ] Document every output — compare to Protocol SIFT baseline, note improvements and regressions
 - [ ] Start building the accuracy report template (false positives, missed artefacts, hallucination tracking)
-- [ ] Kali begins documenting local setup process (will become the try-it-out instructions)
+- [ ] Khalid begins documenting local setup process for both the MCP server and the desktop app (becomes the try-it-out instructions)
+- [ ] Yasmine starts the governance layer: `GOLDEN_RULES.md`, `GUARDRAILS.md`, `COMPLIANCE_SCORE.md`
 
 ### Phase 3: Cross-Validation + Refinement — Weeks 5–6 (14–27 May)
 
@@ -204,24 +226,26 @@ We still get architectural guardrails to point to for criterion #4: the custom M
 - [ ] Refine the reasoning framework based on test results — which sequencing decisions work, which don't, what cross-validation rules catch real issues vs generate noise
 - [ ] Prompt engineering refinement: iterate on the CLAUDE.md skill files based on actual agent behaviour
 
-**Owner: Yasmine + Kali**
+**Owner: Yasmine + Khalid + Jurgen**
 
-- [ ] Run full triage sequences and document self-correction behaviour — does the agent actually catch errors, does it improve on subsequent passes?
+- [ ] Run full triage sequences through the desktop app and document self-correction behaviour — does the agent actually catch errors, does it improve on subsequent passes?
 - [ ] Build the accuracy report with real data from test runs
-- [ ] Update architecture diagram to reflect final component relationships and trust boundaries
-- [ ] Test bypass scenarios: what happens when the agent tries to run destructive commands? What happens when it ignores the confidence classification instructions? Document the results honestly.
+- [ ] Update architecture diagram to reflect final component relationships and trust boundaries (including the Electron context-isolation boundary)
+- [ ] Bypass testing: prompt the agent toward destructive actions, test ignoring confidence classification, attempt to bypass the compliance score. Document results honestly.
 - [ ] Distinguish prompt-based vs architectural guardrails clearly in the diagram
+- [ ] Jurgen: verify every finding in the UI traces to a `function_call_id` in the execution logs
 
 ### Phase 4: Polish, Demo, Submit — Weeks 7–8 (28 May – 15 Jun)
 
 **Owner: Everyone**
 
-- [ ] Full integration testing across multiple evidence sets
+- [ ] Full integration testing across multiple evidence sets (desktop app + MCP server + agent + real SIFT tools)
+- [ ] Package the desktop app via `electron-builder` for Linux AppImage (SIFT VM), macOS DMG, Windows installer
 - [ ] Switch to Claude credits for final testing and demo recording
 - [ ] Clean up and format execution logs for submission
-- [ ] Record demo video (max 5 min, live terminal with audio narration, must show at least one self-correction sequence)
-- [ ] Write the Devpost project story (What it does, How we built it, Challenges, What we learned, What's next — be specific about design decisions and the hybrid approach rationale)
-- [ ] Finalise README with complete setup instructions
+- [ ] Record demo video (max 5 min, live desktop-app screencast with audio narration, must show at least one self-correction sequence and a CONFIRMED/INFERRED/UNCERTAIN tagged report)
+- [ ] Write the Devpost project story (What it does, How we built it, Challenges, What we learned, What's next — be specific about design decisions, the hybrid approach rationale, and the desktop-app contribution)
+- [ ] Finalise README with complete setup instructions for both the MCP server and the desktop app
 - [ ] Final accuracy report pass
 - [ ] Finalise dataset documentation (what was tested, source of data, what the agent found)
 - [ ] Ensure all execution logs are structured, timestamped, and traceable
@@ -238,12 +262,12 @@ All eight components are mandatory — missing any one results in elimination.
 | #   | Deliverable                                          | Owner                            | Notes                                                                                                                                                                                                   |
 | --- | ---------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | **Code Repository** (GitHub, public, MIT/Apache 2.0) | Majid + Mauro                    | Licence must be visible in repo About section. Novel contribution clearly documented.                                                                                                                   |
-| 2   | **Demo Video** (5 min max)                           | Kali (production), All (content) | Live terminal screencast with audio narration, not slides or marketing. Must show at least one self-correction sequence.                                                                                |
+| 2   | **Demo Video** (5 min max)                           | Khalid (production), All (content) | Live desktop-app screencast with audio narration, not slides or marketing. Must show at least one self-correction sequence.                                                                             |
 | 3   | **Architecture Diagram**                             | Yasmine                          | Must identify the hybrid architectural pattern, document where security boundaries are enforced, clearly distinguish prompt-based vs architectural guardrails.                                          |
 | 4   | **Written Project Description**                      | Yasmine + Majid                  | Devpost story format. Be specific about the hybrid approach rationale, dissertation research that informed the design, and tradeoffs made.                                                              |
 | 5   | **Dataset Documentation**                            | Yasmine                          | What the agent was tested against, source of data, what it found. Reproducibility starts here.                                                                                                          |
-| 6   | **Accuracy Report**                                  | Yasmine + Kali                   | False positives, missed artefacts, hallucinated claims. Evidence integrity approach documented. Bypass test results for both architectural and prompt-based guardrails. Honesty valued over perfection. |
-| 7   | **Try-It-Out Instructions**                          | Kali                             | Step-by-step instructions to run on SIFT Workstation. All dependencies documented in README. Must include Protocol SIFT as prerequisite.                                                                |
+| 6   | **Accuracy Report**                                  | Yasmine + Khalid                 | False positives, missed artefacts, hallucinated claims. Evidence integrity approach documented. Bypass test results for both architectural and prompt-based guardrails. Honesty valued over perfection. |
+| 7   | **Try-It-Out Instructions**                          | Khalid                           | Step-by-step instructions to run on SIFT Workstation. All dependencies documented in README. Must include Protocol SIFT as prerequisite.                                                                |
 | 8   | **Agent Execution Logs**                             | Mauro                            | Structured logs with timestamps and token usage. Every finding traceable to specific tool execution. Self-correction iteration traces showing how the agent's approach changed between passes.          |
 
 ---
@@ -257,29 +281,39 @@ All eight components are mandatory — missing any one results in elimination.
 - SANS SIFT Workstation (download OVA from https://www.sans.org/tools/sift-workstation, credentials provided on download page)
 - Protocol SIFT installed on top: `curl -fsSL https://raw.githubusercontent.com/teamdfir/protocol-sift/main/install.sh | bash`
 - ⚠️ **Agentic framework** — Claude Code (requires Anthropic API key) or OpenClaw (open-source alternative). Plan: cheaper model for dev, Claude for final demo.
-- ⚠️ **Custom MCP function runtime** — depends on language decision (Node.js for TypeScript, Python 3.10+ for Python)
+- **Node.js 20+** — required for the MCP server (TypeScript) and the Electron desktop app
 - Git
 
 ### Installation
 
-⚠️ **To be written once Protocol SIFT is inspected and the custom MCP server scaffold exists.**
+```powershell
+# Prerequisite: SIFT Workstation + Protocol SIFT installed
 
-```bash
-# Placeholder — will be replaced with actual setup steps
-# Step 1: SIFT Workstation + Protocol SIFT (prerequisite)
-# Step 2: Clone this repo
-git clone https://github.com/<org>/forensic-AI.git
-cd forensic-AI
-# Step 3: Install custom MCP functions
-# Step 4: Deploy reasoning framework (CLAUDE.md skill files)
-# Step 5: Configure agent
+git clone https://github.com/umfhero/Forensic-AI.git
+cd Forensic-AI
+
+# 1. MCP server (3 forensic tools, stdio transport)
+cd mcp-server
+npm install
+$env:MOCK_MODE = "1"; npm start   # on bash/zsh: MOCK_MODE=1 npm start
+
+# 2. Desktop app (Electron + Vite + React)
+cd ../desktop
+npm install
+npm run dev                        # dev mode: Vite + Electron together
+# or: npm run build && npm start   # packaged launch
+
+# 3. Deploy reasoning framework (CLAUDE.md skill files)
+#    Copy everything from skills/ into ~/.claude/skills/forensic-ai/
+#    Apply config/CLAUDE.md.patch to your global ~/.claude/CLAUDE.md
+#    See skills/README.md for details.
 ```
 
 ---
 
-## The Three Layers
+## The Four Layers
 
-Our novel contribution sits in three layers on top of Protocol SIFT:
+Our novel contribution sits in four layers on top of Protocol SIFT:
 
 ### Layer 1: Focused Custom MCP Functions (5–8 functions)
 
@@ -338,6 +372,35 @@ This is the core novel contribution. Structured skill files that encode how a se
 ### Layer 3: Self-Correcting Triage Loop
 
 The agent execution layer that ties everything together. See [Agent Triage Loop](#agent-triage-loop) for the full five-phase sequence.
+
+### Layer 4: Electron Desktop App
+
+A cross-platform desktop application (Windows, macOS, Linux / SIFT VM) that turns the agent and MCP backend into an examiner portal. Lives in [`desktop/`](./desktop/) and is built from [`Designrules.md`](./Designrules.md): grotesque sans typography, muted monochrome palette, flat surfaces separated by 1px borders, thin-stroke non-filled SVG icons, no gradients, no glassmorphism, no emojis anywhere in the UI.
+
+**What it contributes to each judging criterion:**
+
+| Criterion | How the app helps |
+| --- | --- |
+| #1 Autonomous Execution | Phase indicator in the sidebar shows live progression through the 5-phase triage loop, including self-correction iterations (`i1`, `i2`, `i3`). |
+| #2 IR Accuracy | Confidence classifications (CONFIRMED / INFERRED / UNCERTAIN) render as distinct colour-tagged badges next to every finding. |
+| #4 Constraint Implementation | Guardrail violations (blocked commands, hallucination warnings) surface as visible UI signals, not buried in logs. |
+| #5 Audit Trail | Every finding is clickable and drills into the raw tool call, `function_call_id`, timestamp, and source artefact path. |
+| #6 Usability / Documentation | Judges can run the app themselves — it's the first thing they see in the demo video. |
+
+**Structure:**
+
+```
+desktop/
+├── electron/           # Main process, preload (CJS), MCP bridge
+├── src/                # React renderer
+│   ├── App.tsx         # Three-pane layout
+│   ├── components/     # TerminalView, PhaseIndicator, FindingsList, ReportView, icons
+│   ├── lib/state.ts    # Finding / PhaseState types
+│   └── styles/         # tokens.css (Designrules.md), app.css
+└── package.json        # npm run dev | build | start
+```
+
+**Boundaries:** the renderer runs under context isolation with no Node integration. It talks to the MCP server exclusively through the preload IPC bridge, which spawns the MCP server as a child process over stdio. No forensic logic lives in the UI layer.
 
 ---
 
@@ -416,11 +479,11 @@ These are things we either have not decided yet or do not have enough informatio
 
 | Question                          | Options                                                                                 | Notes                                                                                                                                                                                                                                     | Status                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **Custom MCP function language**  | TypeScript or Python                                                                    | Only for the 5–8 custom functions, not a full server. Python has better Volatility integration (Volatility is Python). TypeScript has stronger typing. Valhuntir used Python.                                                             | ⚠️ OPEN                                 |
+| **Custom MCP function language**  | TypeScript or Python                                                                    | **RESOLVED: TypeScript.** Using `@modelcontextprotocol/sdk` v1.x with Zod schemas and stdio transport. TypeScript gives us strong typing for the JSON output schemas and native MCP SDK support. Volatility/plaso are invoked via shell (child_process). | ✅ RESOLVED — TypeScript                 |
 | **API access for development**    | Cheaper model (GPT-4o, Gemini, local model via OpenClaw) for dev, Claude for final demo | Ask in Slack about sponsored credits close to start date. Budget: split Claude credits 4 ways for final testing. MCP functions and reasoning framework are model-agnostic.                                                                | ⚠️ OPEN — ask about credits near 15 Apr |
 | **Which Volatility version**      | Volatility 2 vs Volatility 3                                                            | SIFT ships both. V3 is actively maintained with cleaner API but some V2 plugins aren't ported. Check what Protocol SIFT uses after installing.                                                                                            | ⚠️ OPEN — resolve after SIFT install    |
 | **Repo org vs personal**          | GitHub org or personal account with collaborators                                       | Org looks more professional on CVs but adds setup overhead.                                                                                                                                                                               | ⚠️ OPEN                                 |
-| **How many custom MCP functions** | 5–8 as planned, or more/fewer                                                           | Depends entirely on what we find when testing Protocol SIFT with sample evidence. If the existing setup handles most tools fine, we might only need 3–4 custom functions. If context overflow is worse than expected, we might need more. | ⚠️ OPEN — resolve in Week 1             |
+| **How many custom MCP functions** | 5–8 as planned, or more/fewer                                                           | **Phase 1 ships 3:** `vol_pslist`, `vol_netscan`, `build_supertimeline`. Additional functions (`vol_malfind`, `parse_event_logs`) will be added in Phase 2 based on testing with sample evidence. | ✅ RESOLVED — 3 initially, expand later  |
 
 ### Things We Do Not Know Yet
 

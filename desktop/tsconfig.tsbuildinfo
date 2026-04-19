@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/findingslist.tsx","./src/components/phaseindicator.tsx","./src/components/reportview.tsx","./src/components/terminalview.tsx","./src/components/icons.tsx","./src/lib/state.ts","./src/types/preload.d.ts"],"version":"5.9.3"}

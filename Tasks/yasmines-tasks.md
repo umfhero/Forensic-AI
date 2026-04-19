@@ -1,5 +1,78 @@
 # Yasmine's Tasks — forensic-AI
 
+**Role:** QA, Compliance & Documentation Lead — owns the governance layer, accuracy report, architecture diagram, dataset documentation, and desktop-app design consistency.
+
+---
+
+## Now — In Flight
+
+- [x] Review the desktop app in `desktop/` and confirm the UI matches `Designrules.md` (no gradients, no emojis, thin-stroke icons, strict grid) — audit complete, all hex values in CSS resolve to tokens in `tokens.css`; xterm theme literals match tokens. No drift to flag.
+- [ ] Flag any UI element that drifts from the design rules — open a task for Majid/Mauro
+
+## Governance Layer (novel contribution for criterion #4)
+
+- [x] Draft `governance/GOLDEN_RULES.md` — 5–10 short rules derived from hackathon rules + EU AI Act + GDPR + forensic chain-of-custody
+- [x] Draft `governance/GUARDRAILS.md` — hard limits (no evidence modification, no destructive actions without approval, all actions logged). Mark each as architectural vs prompt-based.
+- [x] Draft `governance/COMPLIANCE_SCORE.md` — 0–100 scoring system split by category (Legal, Hackathon Rules, Forensic Standards)
+- [ ] Expose the compliance score in the desktop app statusbar or inspector (coordinate with Mauro)
+
+## Desktop App — Design & Compliance
+
+- [ ] Audit `desktop/src/styles/tokens.css` and `app.css` against `Designrules.md`
+- [ ] Make sure every new UI element added by Mauro/Majid uses tokens from `tokens.css` rather than ad-hoc colours/fonts
+- [ ] Confirm the confidence tags (CONFIRMED / INFERRED / UNCERTAIN) render with the muted sage / ochre / clay accents everywhere
+
+## Testing & Accuracy Report
+
+- [ ] Run Protocol SIFT against the starter case data and record the baseline (hallucinated findings, missed artefacts, incorrect confidence)
+- [ ] Build the accuracy report template: `evidence set | finding | correct/incorrect | FP/FN | hallucination flag | guardrail triggered`
+- [ ] Run the desktop app + agent against sample evidence and record outputs in the same format, so baseline vs ours is directly comparable
+- [ ] Track specifically: did confidence classification improve, did self-correction trigger, did the agent stop presenting inferences as facts
+
+## Bypass Testing
+
+- [ ] Prompt the agent toward destructive actions (delete file, modify evidence) and record whether guardrails hold
+- [ ] Document honestly which guardrails are architectural (hold under bypass) vs prompt-based (can be talked around)
+- [ ] Feed results back to Majid/Mauro for any fixes needed
+
+## Architecture Diagram
+
+- [x] Draft v1 of `docs/ARCHITECTURE_DIAGRAM.svg` showing: SIFT tools → MCP server → MCP bridge → Electron desktop app → agent terminal → skill files → triage loop
+- [x] Mark trust boundaries (read-only evidence mount, structured MCP output, contextIsolation in Electron)
+- [x] Mark which guardrails are architectural vs prompt-based
+- [ ] Iterate after bypass testing
+
+## Dataset Documentation
+
+- [x] Draft `docs/DATASET_DOCUMENTATION.md` — every evidence set tested, source, apparent ground truth, what the agent found, what it missed
+
+## Submit
+
+- [ ] Final architecture diagram pass
+- [ ] Final accuracy report with all test data
+- [ ] Co-write Devpost project description with Majid
+- [ ] Final submission checklist review (8 mandatory components)
+
+## Submission Components Owned
+
+| # | Deliverable | Role |
+|---|---|---|
+| 3 | Architecture Diagram | Lead |
+| 4 | Written Project Description | Co-author (with Majid) |
+| 5 | Dataset Documentation | Lead |
+| 6 | Accuracy Report | Co-lead (with Khalid) |
+
+## Key Files Owned
+
+- `governance/GOLDEN_RULES.md`
+- `governance/GUARDRAILS.md`
+- `governance/COMPLIANCE_SCORE.md`
+- `docs/ARCHITECTURE_DIAGRAM.svg`
+- `docs/DATASET_DOCUMENTATION.md`
+- `docs/ACCURACY_REPORT.md`
+- `docs/TOOL_INVENTORY.md`
+# Yasmine's Tasks — forensic-AI
+
 **Role: QA, Compliance & Documentation Lead**
 
 This role covers three things that are genuinely important for winning this, not just finishing it. First, running the tests and building the accuracy report, which feeds directly into judging criterion #2 (IR Accuracy). Second, building the governance layer, which covers criterion #4 (Constraint Implementation) and gives the submission something most other teams won't have. Third, owning the architecture diagram and the dataset documentation, which criterion #6 (Usability and Documentation) depends on. All of these sit in the `overview.md` submission checklist under this role.

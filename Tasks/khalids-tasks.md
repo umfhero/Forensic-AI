@@ -1,5 +1,71 @@
 # Khalid's Tasks — forensic-AI
 
+**Role:** Demo Lead & Setup Owner — owns the demo video, try-it-out instructions, and deployment on a clean SIFT Workstation. First judge impression is the demo.
+
+---
+
+## Now — In Flight
+
+- [ ] Clone the repo on the SIFT VM and walk through the current setup: `mcp-server` (npm install + run) and `desktop` (npm install + `npm run dev`)
+- [ ] Log every step and every error hit — this is the raw material for `docs/SETUP.md`
+
+## Desktop App — Setup & Packaging Verification
+
+- [ ] Verify `npm run dev` launches the Electron app on the SIFT VM (Ubuntu)
+- [ ] Once Mauro ships the AppImage build, verify it runs on a clean SIFT install with no Node/npm installed
+- [ ] Document any Linux-specific setup steps (sandbox flags, AppArmor, display forwarding if used via SSH)
+
+## Setup Documentation
+
+- [ ] Draft `docs/SETUP.md` covering:
+  - Prerequisites (SIFT Workstation, Protocol SIFT, optional Anthropic API key)
+  - Clone repo
+  - Install + start MCP server (`cd mcp-server && npm install && npm start`)
+  - Install + launch desktop app (`cd desktop && npm install && npm run dev`)
+  - Point the agent at an evidence set
+  - How to switch between MOCK_MODE and real Volatility
+- [ ] Run the instructions end-to-end on a fresh VM and fix every gap
+
+## Demo Video
+
+- [ ] Install + test screen recording software on the recording machine (OBS recommended)
+- [ ] Identify the exact moment in the triage loop where self-correction is visible — this must appear in the video
+- [ ] Draft the demo script:
+  - Open the desktop app, show the three-pane dashboard
+  - Point the agent at an evidence set, watch Phase 1 light up in the sidebar
+  - Narrate a tool call landing as a finding with its confidence tag
+  - Show self-correction triggering (Phase 4, iteration counter ticks up)
+  - End on the final Report pane with CONFIRMED / INFERRED / UNCERTAIN sections
+- [ ] Do one full dry run timed against the 5-minute hard cap
+- [ ] Record the final video using Claude API credits
+- [ ] Narrate clearly — assume senior IR audience, tie the behaviour to the judging criteria explicitly
+
+## Accuracy Report Support
+
+- [ ] Run the agent against evidence sets alongside Yasmine and Jurgen, feed data into `docs/ACCURACY_REPORT.md`
+- [ ] Help with the bypass testing scenarios where a fresh tester is useful
+
+## Submit
+
+- [ ] Finalise `docs/SETUP.md` and link from README
+- [ ] Upload and link the demo video in the Devpost submission
+- [ ] Support Yasmine on the final submission checklist review
+
+## Submission Components Owned
+
+| # | Deliverable | Role |
+|---|---|---|
+| 2 | Demo Video | Lead |
+| 6 | Accuracy Report | Co-lead (with Yasmine) |
+| 7 | Try-It-Out Instructions | Lead |
+
+## Key Files Owned
+
+- `docs/SETUP.md`
+- Demo video recording (live terminal + desktop app, max 5 minutes)
+- Demo script (working doc before recording)
+# Khalid's Tasks — forensic-AI
+
 **Role: Demo Lead, Setup & Deployment Owner**
 
 Ownership areas are the demo video, the try-it-out instructions, and local setup, which might sound like support work but are actually central to the judging. Criterion #6 (Usability and Documentation) is equally weighted with the other five criteria, and the demo video is the first thing the judges watch before they look at anything else. Getting those two things right is a real contribution.

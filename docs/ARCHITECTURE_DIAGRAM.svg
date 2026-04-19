@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- forensic-AI architecture diagram v1
+     Style: strict grotesque, muted monochrome, 1px borders, no shadows, no gradients.
+     Derived from /Designrules.md and /overview.md. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" width="1200" height="820" font-family="Inter, Helvetica, Arial, sans-serif">
+  <style>
+    .bg { fill: #0e0e0e; }
+    .pane { fill: #141414; stroke: #262626; stroke-width: 1; }
+    .inset { fill: #1a1a1a; stroke: #262626; stroke-width: 1; }
+    .layer-label { fill: #7a7a7a; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .title { fill: #e6e6e6; font-size: 13px; font-weight: 600; }
+    .sub { fill: #b3b3b3; font-size: 12px; }
+    .caption { fill: #7a7a7a; font-size: 11px; }
+    .mono { font-family: "JetBrains Mono", "Consolas", monospace; fill: #b3b3b3; font-size: 11px; }
+    .arrow { stroke: #4d4d4d; stroke-width: 1.25; fill: none; }
+    .arrow-dashed { stroke: #4d4d4d; stroke-width: 1.25; fill: none; stroke-dasharray: 3 3; }
+    .trust { stroke: #c77d7d; stroke-width: 1.25; fill: none; stroke-dasharray: 4 2; }
+    .confirmed { fill: #8fbf7f; }
+    .inferred { fill: #d4b266; }
+    .uncertain { fill: #c77d7d; }
+    .active { fill: #7fa8c9; }
+  </style>
+
+  <rect width="100%" height="100%" class="bg"/>
+
+  <!-- Header -->
+  <text x="32" y="40" class="title" font-size="17">forensic-AI — system architecture</text>
+  <text x="32" y="58" class="caption">v1 · read-only evidence · layered guardrails · reproducible from execution log</text>
+
+  <!-- ====================================================== -->
+  <!-- Layer 4: Desktop App (top) -->
+  <!-- ====================================================== -->
+  <text x="32" y="92" class="layer-label">Layer 4 — Electron desktop app (analyst surface)</text>
+  <rect x="32" y="100" width="1136" height="120" class="pane"/>
+
+  <rect x="48" y="116" width="320" height="88" class="inset"/>
+  <text x="60" y="134" class="title">Three-pane dashboard</text>
+  <text x="60" y="152" class="sub">Case index · Terminal · Findings</text>
+  <text x="60" y="172" class="caption">React 18 · xterm.js · tokens.css</text>
+  <text x="60" y="190" class="mono">desktop/src/</text>
+
+  <rect x="380" y="116" width="300" height="88" class="inset"/>
+  <text x="392" y="134" class="title">Status bar</text>
+  <text x="392" y="152" class="sub">MCP state · phase · compliance score</text>
+  <text x="392" y="172" class="caption">Live — reads governance rubric</text>
+
+  <rect x="692" y="116" width="220" height="88" class="inset"/>
+  <text x="704" y="134" class="title">Inspector</text>
+  <text x="704" y="152" class="sub">Finding detail · citations</text>
+  <text x="704" y="172" class="caption">CONFIRMED</text>
+  <circle cx="795" cy="168" r="4" class="confirmed"/>
+  <text x="807" y="172" class="caption">INFERRED</text>
+  <circle cx="878" cy="168" r="4" class="inferred"/>
+
+  <rect x="924" y="116" width="228" height="88" class="inset"/>
+  <text x="936" y="134" class="title">Human oversight</text>
+  <text x="936" y="152" class="sub">Stop · approve · export</text>
+  <text x="936" y="172" class="caption">EU AI Act Art. 14</text>
+
+  <!-- Trust boundary: contextIsolation -->
+  <rect x="40" y="108" width="1120" height="120" class="trust"/>
+  <text x="1060" y="104" class="caption" fill="#c77d7d">contextIsolation</text>
+
+  <!-- arrow down -->
+  <path d="M 600 220 L 600 252" class="arrow"/>
+  <polygon points="600,260 596,252 604,252" fill="#4d4d4d"/>
+  <text x="610" y="243" class="mono">preload.cjs · window.forensicAI</text>
+
+  <!-- ====================================================== -->
+  <!-- Layer 3: Reasoning framework + agent session -->
+  <!-- ====================================================== -->
+  <text x="32" y="284" class="layer-label">Layer 3 — Reasoning framework · agent session</text>
+  <rect x="32" y="292" width="1136" height="132" class="pane"/>
+
+  <rect x="48" y="308" width="340" height="100" class="inset"/>
+  <text x="60" y="326" class="title">AI agent (Claude subprocess)</text>
+  <text x="60" y="344" class="sub">Triage loop · self-correction</text>
+  <text x="60" y="362" class="caption">Runs inside the xterm pane</text>
+  <text x="60" y="380" class="mono">desktop/electron/mcpBridge.ts</text>
+  <text x="60" y="398" class="mono">→ stdio to MCP server</text>
+
+  <rect x="400" y="308" width="360" height="100" class="inset"/>
+  <text x="412" y="326" class="title">Skill files — CLAUDE.md</text>
+  <text x="412" y="344" class="sub">ANTI_HALLUCINATION · CROSS_VALIDATION</text>
+  <text x="412" y="362" class="sub">SELF_CORRECTION · REPORT_STRUCTURE</text>
+  <text x="412" y="380" class="caption">Prompt-based guardrails</text>
+  <circle cx="412" cy="397" r="4" class="inferred"/>
+  <text x="424" y="401" class="caption">prompt</text>
+
+  <rect x="772" y="308" width="380" height="100" class="inset"/>
+  <text x="784" y="326" class="title">Governance layer</text>
+  <text x="784" y="344" class="sub">GOLDEN_RULES · GUARDRAILS · COMPLIANCE_SCORE</text>
+  <text x="784" y="362" class="caption">Rubric consumed per phase end</text>
+  <circle cx="784" cy="381" r="4" class="confirmed"/>
+  <text x="796" y="385" class="caption">architectural</text>
+  <circle cx="884" cy="381" r="4" class="inferred"/>
+  <text x="896" y="385" class="caption">prompt</text>
+
+  <path d="M 600 424 L 600 456" class="arrow"/>
+  <polygon points="600,464 596,456 604,456" fill="#4d4d4d"/>
+  <text x="610" y="447" class="mono">MCP — stdio transport</text>
+
+  <!-- ====================================================== -->
+  <!-- Layer 2: MCP server + tools -->
+  <!-- ====================================================== -->
+  <text x="32" y="488" class="layer-label">Layer 2 — MCP server · structured tool wrappers</text>
+  <rect x="32" y="496" width="1136" height="128" class="pane"/>
+
+  <rect x="48" y="512" width="300" height="96" class="inset"/>
+  <text x="60" y="530" class="title">MCP server</text>
+  <text x="60" y="548" class="sub">TypeScript · Zod schemas · stdio</text>
+  <text x="60" y="566" class="caption">Refuses destructive verbs at schema</text>
+  <text x="60" y="584" class="mono">mcp-server/src/</text>
+  <circle cx="60" cy="597" r="4" class="confirmed"/>
+  <text x="72" y="601" class="caption">architectural guardrail</text>
+
+  <rect x="360" y="512" width="240" height="96" class="inset"/>
+  <text x="372" y="530" class="title">vol_pslist</text>
+  <text x="372" y="548" class="sub">Volatility process listing</text>
+  <text x="372" y="566" class="caption">Structured rows</text>
+
+  <rect x="612" y="512" width="240" height="96" class="inset"/>
+  <text x="624" y="530" class="title">vol_netscan</text>
+  <text x="624" y="548" class="sub">Memory network connections</text>
+  <text x="624" y="566" class="caption">Structured rows</text>
+
+  <rect x="864" y="512" width="288" height="96" class="inset"/>
+  <text x="876" y="530" class="title">build_supertimeline</text>
+  <text x="876" y="548" class="sub">Plaso / log2timeline wrapper</text>
+  <text x="876" y="566" class="caption">CSV → JSON events</text>
+  <text x="876" y="584" class="mono">+ vol_malfind, parse_event_logs (planned)</text>
+
+  <path d="M 600 624 L 600 656" class="arrow"/>
+  <polygon points="600,664 596,656 604,656" fill="#4d4d4d"/>
+
+  <!-- ====================================================== -->
+  <!-- Layer 1: Protocol SIFT + evidence -->
+  <!-- ====================================================== -->
+  <text x="32" y="688" class="layer-label">Layer 1 — Protocol SIFT · SIFT Workstation · evidence</text>
+  <rect x="32" y="696" width="1136" height="104" class="pane"/>
+
+  <rect x="48" y="712" width="360" height="72" class="inset"/>
+  <text x="60" y="730" class="title">SIFT Workstation + Protocol SIFT</text>
+  <text x="60" y="748" class="sub">Volatility · Plaso · Sleuthkit · EvtxECmd</text>
+  <text x="60" y="768" class="caption">Tool inventory: docs/TOOL_INVENTORY.md</text>
+
+  <rect x="420" y="712" width="360" height="72" class="inset"/>
+  <text x="432" y="730" class="title">Evidence (read-only mount)</text>
+  <text x="432" y="748" class="sub">Disk · memory · pcap · event logs</text>
+  <text x="432" y="768" class="caption">SHA-256 verified at ingest and pre-run</text>
+
+  <rect x="792" y="712" width="360" height="72" class="inset"/>
+  <text x="804" y="730" class="title">Execution log (JSONL)</text>
+  <text x="804" y="748" class="sub">function_call_id · tool · args · hash</text>
+  <text x="804" y="768" class="caption">case-workspace/logs/ · local only</text>
+
+  <!-- Trust boundary: evidence mount -->
+  <rect x="412" y="704" width="376" height="88" class="trust"/>
+  <text x="600" y="700" class="caption" fill="#c77d7d" text-anchor="middle">trust boundary — read-only filesystem</text>
+
+  <!-- Legend -->
+  <rect x="32" y="808" width="1136" height="1" fill="#262626"/>
+  <g transform="translate(32, 812)">
+    <circle cx="6" cy="0" r="4" class="confirmed"/>
+    <text x="18" y="4" class="caption">architectural guardrail (enforced by code / FS / schema)</text>
+    <circle cx="360" cy="0" r="4" class="inferred"/>
+    <text x="372" y="4" class="caption">prompt-based guardrail (skill files)</text>
+    <line x1="600" y1="0" x2="624" y2="0" class="trust"/>
+    <text x="632" y="4" class="caption">trust boundary</text>
+    <line x1="780" y1="0" x2="804" y2="0" class="arrow"/>
+    <text x="812" y="4" class="caption">data flow</text>
+  </g>
+</svg>

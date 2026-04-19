@@ -1,0 +1,19 @@
+{
+  "NOTE": "Merge this mcpServers block into Protocol SIFT's existing ~/.claude/settings.json. Do NOT replace the existing settings — add alongside the existing 'allow' and 'deny' rules.",
+
+  "mcpServers": {
+    "forensic-ai": {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "/path/to/forensic-ai/mcp-server/src/index.ts"
+      ],
+      "env": {
+        "VOL3_PATH": "/opt/volatility3-2.20.0/vol.py",
+        "LOG2TIMELINE_PATH": "/usr/bin/log2timeline.py",
+        "PSORT_PATH": "/usr/bin/psort.py",
+        "MOCK_MODE": "0"
+      }
+    }
+  }
+}

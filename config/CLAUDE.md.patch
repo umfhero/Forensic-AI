@@ -1,0 +1,52 @@
+# CLAUDE.md Routing Table Additions
+
+> Add the following entries to Protocol SIFT's global `~/.claude/CLAUDE.md` file under the **Tool Routing** table and the **Installed Tool Paths** table.
+
+---
+
+## Tool Routing Table Additions
+
+Add these rows to the existing tool routing table:
+
+| Domain | Skill File | Notes |
+|---|---|---|
+| Investigation Sequencing | `@~/.claude/skills/forensic-ai/INVESTIGATION_SEQUENCING.md` | How to sequence investigative steps across all five triage phases |
+| Confidence Classification | `@~/.claude/skills/forensic-ai/CONFIDENCE_CLASSIFICATION.md` | CONFIRMED / INFERRED / UNCERTAIN tagging rules for all findings |
+
+---
+
+## MCP Tool References
+
+Add this section after the existing tool routing table:
+
+### Custom MCP Tools (forensic-ai server)
+
+For the following forensic operations, use the MCP tools instead of raw shell commands. They return structured, paginated JSON that prevents context window overflow.
+
+| MCP Tool | Replaces | When to Use |
+|---|---|---|
+| `vol_pslist` | `python3 vol.py ... windows.pslist.PsList` | Process listing on ANY memory image — always use this instead of shell |
+| `vol_netscan` | `python3 vol.py ... windows.netscan.NetScan` | Network connections on ANY memory image — always use this instead of shell |
+| `build_supertimeline` | `log2timeline.py` + `psort.py` | Building or querying timelines — MUST use this to avoid millions of raw CSV lines |
+
+For all other forensic tools (malfind, dlllist, handles, cmdline, MFTECmd, EvtxECmd, RECmd, PECmd, YARA, etc.), continue using Protocol SIFT's existing shell access.
+
+---
+
+## Deployment
+
+1. Copy skill files to the Claude Code skills directory:
+   ```bash
+   mkdir -p ~/.claude/skills/forensic-ai
+   cp /path/to/forensic-ai/skills/*.md ~/.claude/skills/forensic-ai/
+   ```
+
+2. Add the MCP server to `~/.claude/settings.json` (see `config/settings.json.example`):
+   ```bash
+   # Edit the existing settings.json to add the mcpServers block
+   nano ~/.claude/settings.json
+   ```
+
+3. Update the global `~/.claude/CLAUDE.md` with the routing table entries above.
+
+4. Restart Claude Code to pick up the new configuration.

@@ -1,0 +1,128 @@
+/* Design tokens — strict, flat, grotesque. Derived from Designrules.md. */
+
+:root {
+  /* Typography — geometric grotesque stack, no sci-fi faces */
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, "Liberation Sans",
+    system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", "Menlo", "Consolas",
+    "Liberation Mono", monospace;
+
+  /* Mathematical type scale — 1.125 (major second). No hero sizes. */
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-base: 13px;
+  --fs-md: 14px;
+  --fs-lg: 15px;
+  --fs-xl: 17px;
+  --fs-2xl: 19px;
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.45;
+
+  /* Colour — muted monochrome, solid values only. No gradients. */
+  --bg-0: #0e0e0e; /* app background */
+  --bg-1: #141414; /* pane */
+  --bg-2: #1a1a1a; /* inset / terminal */
+  --bg-3: #222222; /* hover */
+
+  --fg-0: #e6e6e6; /* primary text */
+  --fg-1: #b3b3b3; /* secondary text */
+  --fg-2: #7a7a7a; /* tertiary / captions */
+  --fg-3: #4d4d4d; /* disabled */
+
+  --border-1: #262626;
+  --border-2: #333333;
+
+  /* Purposeful accents — status only, never decoration */
+  --accent-confirmed: #8fbf7f; /* muted sage */
+  --accent-inferred: #d4b266; /* muted ochre */
+  --accent-uncertain: #c77d7d; /* muted clay */
+  --accent-active: #7fa8c9; /* muted slate-blue for running state */
+
+  /* Spacing — 4px base grid, dense */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+
+  /* Radius — minimal. Sharp edges preferred. */
+  --radius-0: 0px;
+  --radius-1: 2px;
+
+  /* Shadow — none by default; use 1px borders for depth */
+  --shadow-none: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--fg-0);
+  background: var(--bg-0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--border-2);
+  color: var(--fg-0);
+}
+
+button {
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  color: var(--fg-0);
+  background: var(--bg-1);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-1);
+  padding: var(--sp-1) var(--sp-3);
+  cursor: pointer;
+  line-height: 1;
+  transition: background 80ms linear, border-color 80ms linear;
+}
+button:hover {
+  background: var(--bg-3);
+  border-color: var(--border-2);
+}
+button:disabled {
+  color: var(--fg-3);
+  cursor: not-allowed;
+  background: var(--bg-1);
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+}
+
+/* Scrollbar — flat, minimal */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-1);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-2);
+  border: 2px solid var(--bg-1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3d3d3d;
+}

@@ -1,5 +1,70 @@
 # Majid's Tasks — forensic-AI
 
+**Role:** Lead Developer & Project Lead — owns reasoning framework, MCP tools, triage loop, and keeps the desktop app and backend aligned.
+
+---
+
+## Now — In Flight
+
+- [ ] Review the MCP server scaffold in `mcp-server/` (3 tools: `vol_pslist`, `vol_netscan`, `build_supertimeline`)
+- [ ] Review draft skill files in `skills/` (`INVESTIGATION_SEQUENCING.md`, `CONFIDENCE_CLASSIFICATION.md`)
+- [ ] Review the Electron desktop app in `desktop/` — confirm the three-pane layout matches the intended UX
+
+## Reasoning Framework (CLAUDE.md skill files)
+
+- [ ] Draft `skills/ANTI_HALLUCINATION.md` — port the anti-hallucination approach from the dissertation to forensic context
+- [ ] Draft `skills/CROSS_VALIDATION.md` — disk ↔ memory comparison rules, timestamp reconciliation, Amcache vs Prefetch logic
+- [ ] Draft `skills/REPORT_STRUCTURE.md` — final-output template matching the desktop app's Report pane
+- [ ] Refine `skills/INVESTIGATION_SEQUENCING.md` once there's real tool output to test against
+- [ ] Refine `skills/CONFIDENCE_CLASSIFICATION.md` with examples from real runs
+
+## MCP Tools (backend)
+
+- [ ] Add `vol_malfind` tool to `mcp-server/src/tools/`
+- [ ] Add `parse_event_logs` tool (EvtxECmd wrapper) to `mcp-server/src/tools/`
+- [ ] Replace mock data with real Volatility 3 execution once SIFT VM is set up
+- [ ] Keep JSON schema consistent across all 5 tools
+
+## Triage Loop (execution layer)
+
+- [ ] Build Phase 1 (Initial Survey): agent picks broad-scope tools from `INVESTIGATION_SEQUENCING.md`
+- [ ] Build Phase 2 (Targeted Deep-Dive): follow up on flagged PIDs / time windows
+- [ ] Build Phase 3 (Cross-Validation): run `CROSS_VALIDATION.md` rules against Phase 1+2 output
+- [ ] Build Phase 5 (Synthesis): emit structured report into the desktop app's Report pane
+- [ ] Work with Mauro on Phase 4 (Self-Correction)
+
+## Desktop App Integration
+
+- [ ] Define the "Finding" wire format the MCP tools emit → the desktop app renders in the Findings list
+- [ ] Define how phase progression events are pushed from the triage loop to the desktop UI
+- [ ] Review Mauro's terminal ↔ agent session wiring
+
+## Testing
+
+- [ ] Run the desktop app against mock data end-to-end, confirm every tool call surfaces in the UI
+- [ ] Once SIFT VM is set up, run the agent against the starter case data and compare vs Protocol SIFT baseline
+- [ ] Sit with Yasmine and Jurgen during their test runs and adjust skill files based on what the agent gets wrong
+
+## Submit
+
+- [ ] Co-write Devpost project description with Yasmine
+- [ ] Final submission checklist review (with Yasmine)
+- [ ] **Submit by 15 June 23:45 EDT**
+
+## Submission Components Owned
+
+| # | Deliverable | Role |
+|---|---|---|
+| 1 | Code Repository | Co-lead (with Mauro) |
+| 4 | Written Project Description | Co-author (with Yasmine) |
+
+## Open Decisions
+
+- [ ] Confirm Volatility version once SIFT is installed
+- [ ] GitHub org vs personal account (low priority)
+- [ ] API credits — ask in Slack close to final demo
+# Majid's Tasks — forensic-AI
+
 **Role: Lead Developer & Project Lead**
 
 Wlead the technical build while keeping everything coherent across the group. The self-correcting triage loop and the reasoning framework are the two things that win this hackathon, and both draw directly from the dissertation, making the role the right fit to drive them. Alongside building, architectural decisions must be made and everyone else unblocked when stuck.
