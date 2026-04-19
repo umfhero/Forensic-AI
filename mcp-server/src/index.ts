@@ -14,6 +14,8 @@
  * Tools:
  *   - vol_pslist:          Volatility 3 process listing with filtering and pagination
  *   - vol_netscan:         Volatility 3 network connections with filtering and pagination
+ *   - vol_malfind:         Volatility 3 injected-code scan with filtering and pagination
+ *   - parse_event_logs:    EvtxECmd wrapper for Windows .evtx files
  *   - build_supertimeline: log2timeline/psort supertimeline with time range filtering and pagination
  *
  * Environment variables:
@@ -28,6 +30,8 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { registerVolPslist } from "./tools/vol-pslist.js";
 import { registerVolNetscan } from "./tools/vol-netscan.js";
 import { registerBuildSupertimeline } from "./tools/build-supertimeline.js";
+import { registerVolMalfind } from "./tools/vol-malfind.js";
+import { registerParseEventLogs } from "./tools/parse-event-logs.js";
 
 const server = new McpServer({
   name: "forensic-ai",
@@ -52,6 +56,8 @@ const server = new McpServer({
 registerVolPslist(server);
 registerVolNetscan(server);
 registerBuildSupertimeline(server);
+registerVolMalfind(server);
+registerParseEventLogs(server);
 
 // Connect via stdio transport (Claude Code spawns this as a child process)
 const transport = new StdioServerTransport();

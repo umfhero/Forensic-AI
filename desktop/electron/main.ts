@@ -60,6 +60,16 @@ ipcMain.handle(
 
 ipcMain.handle("mcp:listTools", async () => mcp.listTools());
 
+ipcMain.handle(
+  "mcp:runTriage",
+  async (
+    _event,
+    opts: { memoryImage: string; diskEvidence: string; eventLogPath: string },
+  ) => {
+    return mcp.runTriage(opts);
+  },
+);
+
 // Diagnostic events pushed from the bridge
 mcp.on("diagnostic", (line: string) => {
   mainWindow?.webContents.send("mcp:diagnostic", line);
@@ -67,6 +77,14 @@ mcp.on("diagnostic", (line: string) => {
 
 mcp.on("statusChange", (status: string) => {
   mainWindow?.webContents.send("mcp:statusChange", status);
+});
+
+mcp.on("finding", (finding: unknown) => {
+  mainWindow?.webContents.send("mcp:finding", finding);
+});
+
+mcp.on("phase", (phase: unknown) => {
+  mainWindow?.webContents.send("mcp:phase", phase);
 });
 
 void app.whenReady().then(() => {

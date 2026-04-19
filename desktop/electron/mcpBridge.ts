@@ -3,6 +3,11 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import {
+  TriageOrchestrator,
+  type TriageRunOptions,
+  type TriageRunResult,
+} from "./triage.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -105,5 +110,24 @@ export class McpBridge extends EventEmitter {
       const message = err instanceof Error ? err.message : String(err);
       return { ok: false, error: message };
     }
+  }
+
+  async runTriage(opts: TriageRunOptions): Promise<TriageRunResult> {
+    if (!this.client) {
+      return {
+        ok: false,
+        findings: [],
+        phases: [],
+        error: "MCP server not running — start it before running triage",
+      };
+    }
+    const orchestrator = new TriageOrchestrator(this.client, this);
+    this.emit("diagnostic", "[triage] starting run");
+    const result = await orchestrator.run(opts);
+    this.emit(
+      "diagnostic",
+      `[triage] run ${result.ok ? "complete" : "failed"}: ${result.findings.length} finding(s)`,
+    );
+    return result;
   }
 }

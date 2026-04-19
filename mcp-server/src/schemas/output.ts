@@ -60,9 +60,84 @@ export const TimelineEntrySchema = z.object({
   extra: z.array(z.record(z.string(), z.unknown())).optional(),
 });
 
+export const MalfindEntrySchema = z.object({
+  pid: z.number().int(),
+  process: z.string().describe("Image name of the owning process"),
+  address: z.string().describe("Virtual address of the suspicious region"),
+  vad_tag: z.string().describe("Virtual Address Descriptor tag (e.g. VadS)"),
+  protection: z.string().describe("Memory protection (e.g. PAGE_EXECUTE_READWRITE)"),
+  commit_charge: z.number().int(),
+  private_memory: z.boolean(),
+  hexdump: z.string().describe("First bytes of the region (hex, truncated)"),
+  disasm: z.string().describe("Short disassembly of the region's start (ASCII)"),
+  notes: z.string().describe("Heuristic flag summary (e.g. MZ_HEADER, RWX_REGION)"),
+});
+
+export const EventLogEntrySchema = z.object({
+  record_id: z.number().int(),
+  event_id: z.number().int(),
+  provider: z.string(),
+  channel: z.string().describe("Event log channel (Security, System, Sysmon/Operational, …)"),
+  level: z.string(),
+  computer: z.string(),
+  user_sid: z.string().nullable(),
+  timestamp: z.string().describe("ISO-8601 UTC timestamp"),
+  message: z.string(),
+  data: z.record(z.string(), z.unknown()).describe("Parsed EventData / UserData fields"),
+});
+
 export type ProcessEntry = z.infer<typeof ProcessEntrySchema>;
 export type NetworkConnection = z.infer<typeof NetworkConnectionSchema>;
 export type TimelineEntry = z.infer<typeof TimelineEntrySchema>;
+export type MalfindEntry = z.infer<typeof MalfindEntrySchema>;
+export type EventLogEntry = z.infer<typeof EventLogEntrySchema>;
+
+// --- Finding wire format (shared with desktop app) ---
+//
+// The desktop app's Report pane, Findings list, and audit trail consume this
+// shape directly. Every finding emitted by the triage loop MUST conform.
+// Mirrored at desktop/src/lib/state.ts — keep the two in sync.
+
+export const ConfidenceSchema = z.enum(["confirmed", "inferred", "uncertain"]);
+export type Confidence = z.infer<typeof ConfidenceSchema>;
+
+export const FindingSchema = z.object({
+  id: z.string().describe("Stable ID for this finding within a triage run"),
+  title: z.string().describe("One-line finding statement"),
+  confidence: ConfidenceSchema,
+  phase: z.number().int().min(1).max(5).describe("Triage phase that produced the finding"),
+  source: z.string().describe("Tool name or 'cross-validation'"),
+  function_call_ids: z.array(z.string()).describe("All tool invocations that contributed"),
+  source_artefacts: z.array(z.string()).describe("Evidence paths referenced"),
+  kill_chain_stage: z.string().optional(),
+  timestamp: z.string().describe("ISO-8601 — when the finding was recorded"),
+  event_time: z.string().optional().describe("ISO-8601 — when the underlying event occurred"),
+  evidence: z.string().describe("Verbatim or near-verbatim tool-output excerpt"),
+  reasoning: z.string().optional().describe("Required for INFERRED findings"),
+  alternatives: z.string().optional().describe("Alternative explanations (INFERRED)"),
+  gaps: z.string().optional().describe("What is missing (UNCERTAIN)"),
+  contradictions: z.string().optional().describe("Conflicting evidence (UNCERTAIN)"),
+  follow_up: z.string().optional().describe("Recommended next step (UNCERTAIN)"),
+  based_on: z.array(z.string()).optional().describe("Finding IDs this depends on (INFERRED)"),
+});
+
+export type Finding = z.infer<typeof FindingSchema>;
+
+// --- Triage phase progression (shared with desktop app) ---
+
+export const PhaseStatusSchema = z.enum(["pending", "active", "done", "error"]);
+export type PhaseStatus = z.infer<typeof PhaseStatusSchema>;
+
+export const PhaseEventSchema = z.object({
+  phase: z.number().int().min(1).max(5),
+  name: z.string(),
+  status: PhaseStatusSchema,
+  iteration: z.number().int().nonnegative(),
+  timestamp: z.string(),
+  note: z.string().optional(),
+});
+
+export type PhaseEvent = z.infer<typeof PhaseEventSchema>;
 
 // --- Generic forensic tool result ---
 

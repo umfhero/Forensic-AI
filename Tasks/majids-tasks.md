@@ -6,37 +6,37 @@
 
 ## Now — In Flight
 
-- [ ] Review the MCP server scaffold in `mcp-server/` (3 tools: `vol_pslist`, `vol_netscan`, `build_supertimeline`)
-- [ ] Review draft skill files in `skills/` (`INVESTIGATION_SEQUENCING.md`, `CONFIDENCE_CLASSIFICATION.md`)
-- [ ] Review the Electron desktop app in `desktop/` — confirm the three-pane layout matches the intended UX
+- [x] Review the MCP server scaffold in `mcp-server/` (now 5 tools: `vol_pslist`, `vol_netscan`, `vol_malfind`, `parse_event_logs`, `build_supertimeline`)
+- [x] Review draft skill files in `skills/` (`INVESTIGATION_SEQUENCING.md`, `CONFIDENCE_CLASSIFICATION.md`)
+- [x] Review the Electron desktop app in `desktop/` — confirm the three-pane layout matches the intended UX
 
 ## Reasoning Framework (CLAUDE.md skill files)
 
-- [ ] Draft `skills/ANTI_HALLUCINATION.md` — port the anti-hallucination approach from the dissertation to forensic context
-- [ ] Draft `skills/CROSS_VALIDATION.md` — disk ↔ memory comparison rules, timestamp reconciliation, Amcache vs Prefetch logic
-- [ ] Draft `skills/REPORT_STRUCTURE.md` — final-output template matching the desktop app's Report pane
+- [x] Draft `skills/ANTI_HALLUCINATION.md` — port the anti-hallucination approach from the dissertation to forensic context
+- [x] Draft `skills/CROSS_VALIDATION.md` — disk ↔ memory comparison rules, timestamp reconciliation, Amcache vs Prefetch logic
+- [x] Draft `skills/REPORT_STRUCTURE.md` — final-output template matching the desktop app's Report pane
 - [ ] Refine `skills/INVESTIGATION_SEQUENCING.md` once there's real tool output to test against
 - [ ] Refine `skills/CONFIDENCE_CLASSIFICATION.md` with examples from real runs
 
 ## MCP Tools (backend)
 
-- [ ] Add `vol_malfind` tool to `mcp-server/src/tools/`
-- [ ] Add `parse_event_logs` tool (EvtxECmd wrapper) to `mcp-server/src/tools/`
+- [x] Add `vol_malfind` tool to `mcp-server/src/tools/`
+- [x] Add `parse_event_logs` tool (EvtxECmd wrapper) to `mcp-server/src/tools/`
 - [ ] Replace mock data with real Volatility 3 execution once SIFT VM is set up
-- [ ] Keep JSON schema consistent across all 5 tools
+- [x] Keep JSON schema consistent across all 5 tools
 
 ## Triage Loop (execution layer)
 
-- [ ] Build Phase 1 (Initial Survey): agent picks broad-scope tools from `INVESTIGATION_SEQUENCING.md`
-- [ ] Build Phase 2 (Targeted Deep-Dive): follow up on flagged PIDs / time windows
-- [ ] Build Phase 3 (Cross-Validation): run `CROSS_VALIDATION.md` rules against Phase 1+2 output
-- [ ] Build Phase 5 (Synthesis): emit structured report into the desktop app's Report pane
+- [x] Build Phase 1 (Initial Survey): agent picks broad-scope tools from `INVESTIGATION_SEQUENCING.md`
+- [x] Build Phase 2 (Targeted Deep-Dive): follow up on flagged PIDs / time windows
+- [x] Build Phase 3 (Cross-Validation): run `CROSS_VALIDATION.md` rules against Phase 1+2 output
+- [x] Build Phase 5 (Synthesis): emit structured report into the desktop app's Report pane
 - [ ] Work with Mauro on Phase 4 (Self-Correction)
 
 ## Desktop App Integration
 
-- [ ] Define the "Finding" wire format the MCP tools emit → the desktop app renders in the Findings list
-- [ ] Define how phase progression events are pushed from the triage loop to the desktop UI
+- [x] Define the "Finding" wire format the MCP tools emit → the desktop app renders in the Findings list (see `docs/WIRE_FORMAT.md`)
+- [x] Define how phase progression events are pushed from the triage loop to the desktop UI (see `docs/WIRE_FORMAT.md`)
 - [ ] Review Mauro's terminal ↔ agent session wiring
 
 ## Testing

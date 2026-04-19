@@ -1,5 +1,5 @@
-import type { PhaseState } from "../lib/state.js";
-import { IconCircle, IconCheck, IconChip } from "./icons.js";
+import type { PhaseState } from "../lib/state";
+import { IconCircle, IconCheck, IconChip } from "./icons";
 
 interface Props {
   phases: PhaseState[];
@@ -14,7 +14,8 @@ export function PhaseIndicator({ phases }: Props) {
           role="listitem"
           className={`phase ${p.status === "active" ? "active" : ""} ${
             p.status === "done" ? "done" : ""
-          }`}
+          } ${p.status === "error" ? "error" : ""}`}
+          title={p.note ?? ""}
         >
           <span aria-hidden="true" style={{ display: "inline-flex" }}>
             {p.status === "done" ? (
@@ -32,7 +33,7 @@ export function PhaseIndicator({ phases }: Props) {
             {p.name}
           </span>
           <span className="iter">
-            {p.iteration > 0 ? `i${p.iteration}` : "—"}
+            {p.status === "error" ? "err" : p.iteration > 0 ? `i${p.iteration}` : "—"}
           </span>
         </div>
       ))}

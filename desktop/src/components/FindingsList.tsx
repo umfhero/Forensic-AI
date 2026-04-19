@@ -1,4 +1,4 @@
-import type { Finding } from "../lib/state.js";
+import type { Finding } from "../lib/state";
 
 interface Props {
   findings: Finding[];
@@ -23,7 +23,12 @@ export function FindingsList({ findings, onSelect }: Props) {
             <span className="title">{f.title}</span>
           </div>
           <div className="meta">
-            {f.source} · {new Date(f.timestamp).toISOString().slice(11, 19)}
+            <span style={{ fontFamily: "var(--font-mono)" }}>p{f.phase}</span>
+            {" · "}
+            {f.source}
+            {" · "}
+            {new Date(f.timestamp).toISOString().slice(11, 19)}
+            {f.kill_chain_stage ? ` · ${f.kill_chain_stage}` : ""}
           </div>
         </button>
       ))}
